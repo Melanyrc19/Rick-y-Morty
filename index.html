@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Boldonse&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+ 
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Si quieres usar las fuentes en todo el body, define el font-family aquí */
+        body {
+            font-family: 'Pixelify Sans', sans-serif; /* Cambia esta fuente según tus preferencias */
+        }
+
+    </style>
+</head> 
+<body>
+    <header class="flex flex-col">
+        <div class="flex justify-center items-center bg-green-300 h-21">
+            <div class="flex justify-center items-center m-auto text-white text-3xl h-16 font-extrabold px-10 py-1">
+                 <p class=" ">Buscador de Rick y Morty</p>
+            </div>
+        </div>
+        <div class="home relative">
+            <div class="absolute inset-0 bg-gradient-to-b from-black to-transparent opacity-60 z-10"></div>
+            <img src="https://images.fastcompany.com/image/upload/f_auto,q_auto,c_fit/wp-cms/uploads/2019/11/p-1-it-is-time-to-forgive-and8216rick-and-mortyand8217-for-its-toxic-fandom.jpg" class="w-full h-72 object-cover" alt="">
+        </div>
+    </header>
+    <main>
+        <nav class="m-4 my-12">
+            <h3 class="mt-8 font-bold text-xl">Filtros</h3>
+            <form action="">
+                <input id="input-search" class="p-2 w-full my-4 border-b-2 border-green-300 pb-2 mb-8" type="text" placeholder="Ingresa tu búsqueda" name="search">
+                <!-- falta simbolo de buscar en input -->
+                <div class="flex justify-between">
+                    <div class="flex flex-col">
+                        <label class="mr-6  text-gray-500 font-semibold" for="tipo">Tipo</label>
+                        <select id="filtro-categoria" class="bg-gray-200 font-bold w-30"  id="tipo" name="tipo">
+                            <option id="personaje-filter" value="nombre">Personaje</option>
+                            <option id="capitulo-filter" value="capitulo">Capitulo</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-wrap justify-between">
+                        <div class="flex flex-col mx-4">
+                            <label class="mr-6 text-gray-500 font-semibold" for="orden">Por genero</label>
+                            <select class="bg-gray-200 font-bold w-24"  id="gender-filter" name="orden">
+                                <option value="todos">Todos</option>
+                                <option value="male">Hombre</option>
+                                <option value="female">Mujer</option>
+                                <option value="genderless">genderless</option>
+                                <option value="unknown">Desconocido</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col mx-4">
+                            <label class="mr-6 text-gray-500 font-semibold" for="status-filter">Por estado</label>
+                            <select class="bg-gray-200 font-bold w-24"  id="status-filter" name="orden">
+                                <option value="alive">Vivo</option>
+                                <option value="dead">Muerto</option>
+                                <option value="unknown">Desconocido</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="button-search" class="mx-4 flex justify-center items-center bg-black text-white w-24 h-10 hover:bg-green-400 focus:outline-none transition-colors duration-200" type="submit">Buscar</button>
+                </div>
+            </form>
+        </nav>
+        <section class="w-full h-102" >
+            <div class="h-auto flex flex-wrap w-full justify-center m-auto" id="container-images">
+                <div class="flex justify-center" id="characters">
+
+                </div>
+
+            </div>
+            <div id="container-detail"></div>
+            <h4 id="page"></h4>
+            <div id="container-buttons" class="flex justify-center">
+                <button  id="button-prev-prev" class="border-4 bg-gray-400 p-1 m-4"><i class="fa-solid fa-angles-left"></i> </button>
+                <button  id="button-prev" class="border-4 bg-gray-400 p-1 m-4"><i class="fa-solid fa-arrow-left"></i></button>
+                <button id="button-next" class="border-4 bg-gray-400 p-1 m-4"><i class="fa-solid fa-arrow-right"></i></button></button>
+                <button id="button-next-next"  class="border-4 bg-gray-400 p-1 m-4"><i class="fa-solid fa-angles-right"></i></button>
+            </div>
+
+        </section>
+
+
+    </main>
+    <footer class="mt-12 bg-black w-full h-28">
+        <p class="flex justify-center items-center text-white h-full">
+            Hecho por A.M.R.C
+        </p>
+    </footer>
+
+    <script src="./index.js"></script>
+
+</body>
+</html>
