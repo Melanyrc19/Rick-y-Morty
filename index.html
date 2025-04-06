@@ -38,7 +38,7 @@
             <form action="">
                 <input id="input-search" class="p-2 w-full my-4 border-b-2 border-green-300 pb-2 mb-8" type="text" placeholder="Ingresa tu búsqueda" name="search">
                 <!-- falta simbolo de buscar en input -->
-                <div class="flex justify-center">
+                <div class="flex justify-between">
                     <div class="flex flex-col">
                         <label class="mr-6  text-gray-500 font-semibold" for="tipo">Tipo</label>
                         <select id="filtro-categoria" class="bg-gray-200 font-bold w-30"  id="tipo" name="tipo">
@@ -46,7 +46,7 @@
                             <option id="capitulo-filter" value="capitulo">Capitulo</option>
                         </select>
                     </div>
-                    <div id="opcion-episodios" class="hidden">
+                    <div id="opcion-episodios" class="">
                         <label for="capitulo">capitulos</label>
                         <select  id="episodios-filter" name="" id="">
                             <option value=""></option>
@@ -54,7 +54,7 @@
                         </select>
                        
                     </div>
-                    <div id="opcionesPersonajes" class="hidden flex flex-wrap justify-between">
+                    <div id="opcionesPersonajes" class="flex flex-wrap justify-between">
                         <div class="flex flex-col mx-4">
                             <label class="mr-6 text-gray-500 font-semibold" for="orden">Por genero</label>
                             <select class="bg-gray-200 font-bold w-24"  id="gender-filter" name="orden">
@@ -66,8 +66,9 @@
                             </select>
                         </div>
                         <div class="flex flex-col mx-4">
-                            <label class="mr-6 text-gray-500 font-semibold" for="status-filter">Por estado</label>
+                            <label class="mr-6 text-gray-500 font-semibold" >Por estado</label>
                             <select class="bg-gray-200 font-bold w-24"  id="status-filter" name="orden">
+                                <option value="todos">Todos</option>
                                 <option value="alive">Vivo</option>
                                 <option value="dead">Muerto</option>
                                 <option value="unknown">Desconocido</option>
