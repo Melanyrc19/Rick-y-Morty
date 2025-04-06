@@ -21,6 +21,7 @@ const $buttonNextNext = $("#button-next-next");
 
 const $personajeFilter = $("#personaje-filter");
 const $capituloFilter = $("#capitulo-filter");
+const $episodioFilter = $("#episodios-filter");
 const $statusFilter = $("#status-filter");
 const $filtroCategoria = $("#filtro-categoria");
 const $genderFilter = $("#gender-filter");
@@ -98,11 +99,44 @@ function obtenerDatos(page, filters) {
         });
 }
 
+
+// for:
+function obtenerCapitulos() {
+    // Hacemos una solicitud a la API para obtener los episodios
+    fetch("https://rickandmortyapi.com/api/episode")
+        .then(res => res.json())
+        .then(data => {
+            const episodes = data.results;
+
+            // Vaciar las opciones previas
+            $episodioFilter.innerHTML = "";
+
+            // Crear una opción por defecto
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.textContent = "Selecciona un capítulo";
+            $episodioFilter.appendChild(defaultOption);
+
+            // Agregar los capítulos como opciones
+            episodes.forEach(episode => {
+                const option = document.createElement("option");
+                option.value = episode.id;  // Usamos el ID del episodio como valor
+                option.textContent = episode.name;  // Usamos el nombre del episodio como texto
+                $episodioFilter.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error("Error al obtener los episodios:", error);
+        });
+}
+
+// Llamar a la función para cargar los capítulos cuando la página se cargue
+
 // Evento de búsqueda
 $buttonSearch.addEventListener("click", (event) => {
     event.preventDefault(); // Prevenir la recarga de la página
     
-    currentPage = $page; // Establece la página a 1
+    currentPage = 1; // Establece la página a 1
     
     obtenerDatos(currentPage, {
         name: $textSearch.value,
@@ -155,9 +189,25 @@ $buttonNextNext.addEventListener("click", () => {
         episode: $capituloFilter.value,
     });
 });
+$opcionEpisodios = $("#opcion-episodios")
+$opcionesPersonajes = $("#opcionesPersonajes")
+$filtroCategoria.addEventListener("change", () => {
+    if ($filtroCategoria.value === 'nombre') {
+        $opcionesPersonajes.classList.toggle("hidden");
+        $opcionEpisodios.classList.add("hidden");
+    }
+    if ($filtroCategoria.value === 'capitulo') {   
+        $opcionEpisodios.classList.toggle("hidden");
+        $opcionesPersonajes.classList.add("hidden");
+}});
+
+
+
+
 
 // Cargar datos al iniciar la página
 window.onload = () => {
+    obtenerCapitulos();
     obtenerDatos(currentPage, {
         name: $textSearch.value,
         gender: $genderFilter.value,
