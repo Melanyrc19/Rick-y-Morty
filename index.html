@@ -20,11 +20,11 @@
 
     </style>
 </head> 
-<body>
+<body class="bg-green-600">
     <header class="flex flex-col">
-        <div class="flex justify-center items-center bg-green-300 h-21">
-            <div class="flex justify-center items-center m-auto text-white text-3xl h-16 font-extrabold px-10 py-1">
-                 <p class=" ">Buscador de Rick y Morty</p>
+        <div class="flex justify-center items-center bg-black h-21">
+            <div class="flex items-center m-auto text-white text-3xl h-16  md:h-32 font-extrabold px-10 py-1">
+                 <p class="text-4xl ">Buscador de Rick y Morty</p>
             </div>
         </div>
         <div class="home relative">
@@ -33,31 +33,28 @@
         </div>
     </header>
     <main>
-        <nav class="m-4 my-12">
-            <h3 class="mt-8 font-bold text-xl">Filtros</h3>
+        <nav class="w-4/6 m-auto my-12">
+            <h3 class="mt-8 font-bold text-3xl">Filtros</h3>
             <form action="">
-                <input id="input-search" class="p-2 w-full my-4 border-b-2 border-green-300 pb-2 mb-8" type="text" placeholder="Ingresa tu búsqueda" name="search">
-                <!-- falta simbolo de buscar en input -->
-                <div class="flex justify-between">
+                <div class="flex">
+                     <input id="input-search" class="p-2 w-full my-4 border-b-2 border-green-300 pb-2  mb-8" type="text" placeholder="Ingresa tu búsqueda" name="search">
+                     <!-- falta simbolo de buscar en input -->
+                     <button id="button-search" class="mx-4 flex justify-center items-center bg-black text-white w-24 h-10 hover:bg-green-400 focus:outline-none transition-colors duration-200" type="submit">Buscar</button>
+                </div>
+            
+                <div class="flex ">
                     <div class="flex flex-col">
-                        <label class="mr-6  text-gray-500 font-semibold" for="tipo">Tipo</label>
-                        <select id="filtro-categoria" class="bg-gray-200 font-bold w-30"  id="tipo" name="tipo">
-                            <option id="personaje-filter" value="nombre">Personaje</option>
-                            <option id="capitulo-filter" value="capitulo">Capitulo</option>
+                        <label class="mr-6  md:text-2xl text-gray-500 font-semibold md:my-4" for="tipo">Tipo</label>
+                        <select id="filtro-categoria" class="mr-6  md:text-xl bg-gray-200 font-bold w-30"  id="tipo" name="tipo">
+                            <option value="nombre">Personaje</option>
+                            <option  value="capitulo">Capitulo</option>
                         </select>
                     </div>
-                    <div id="opcion-episodios" class="">
-                        <label for="capitulo">capitulos</label>
-                        <select  id="episodios-filter" name="" id="">
-                            <option value=""></option>
-                            <!-- Se cargan los capítulos dinámicamente con JavaScript -->
-                        </select>
-                       
-                    </div>
+                    
                     <div id="opcionesPersonajes" class="flex flex-wrap justify-between">
                         <div class="flex flex-col mx-4">
-                            <label class="mr-6 text-gray-500 font-semibold" for="orden">Por genero</label>
-                            <select class="bg-gray-200 font-bold w-24"  id="gender-filter" name="orden">
+                            <label class="mr-6  md:text-2xl text-gray-500 font-semibold md:my-4" for="orden">Por genero</label>
+                            <select class="mr-6  md:text-xl bg-gray-200 font-bold w-30"   id="gender-filter" name="orden">
                                 <option value="todos">Todos</option>
                                 <option value="male">Hombre</option>
                                 <option value="female">Mujer</option>
@@ -66,8 +63,8 @@
                             </select>
                         </div>
                         <div class="flex flex-col mx-4">
-                            <label class="mr-6 text-gray-500 font-semibold" >Por estado</label>
-                            <select class="bg-gray-200 font-bold w-24"  id="status-filter" name="orden">
+                            <label class="mr-6  md:text-2xl text-gray-500 font-semibold md:my-4" >Por estado</label>
+                            <select class="mr-6  md:text-xl bg-gray-200 font-bold w-30"  id="status-filter" name="orden">
                                 <option value="todos">Todos</option>
                                 <option value="alive">Vivo</option>
                                 <option value="dead">Muerto</option>
@@ -75,12 +72,12 @@
                             </select>
                         </div>
                     </div>
-                    <button id="button-search" class="mx-4 flex justify-center items-center bg-black text-white w-24 h-10 hover:bg-green-400 focus:outline-none transition-colors duration-200" type="submit">Buscar</button>
                 </div>
             </form>
         </nav>
-        <section class="w-full h-102" >
-            <div class="h-auto flex flex-wrap w-full justify-center m-auto" id="container-images">
+        <section class="w-4/6 m-auto py-12 h-102 bg-purple-400" >
+
+            <div class=" h-auto flex flex-wrap w-full justify-center m-auto" id="container-images">
                 <div class="flex justify-center" id="characters">
 
                 </div>
@@ -99,8 +96,8 @@
 
 
     </main>
-    <footer class="mt-12 bg-black w-full h-28">
-        <p class="flex justify-center items-center text-white h-full">
+    <footer class="mt-12 bg-black w-full h-28 md:h-56">
+        <p class="flex justify-center items-center text-white h-full md:text-2xl">
             Hecho por A.M.R.C
         </p>
     </footer>
