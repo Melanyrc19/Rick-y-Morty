@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Boldonse&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="loading.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
  
 
@@ -20,7 +21,7 @@
 
     </style>
 </head> 
-<body class="bg-green-600">
+<body class="bg-green-600 absolute">
     <header class="flex flex-col">
         <div class="flex justify-center items-center bg-black h-21">
             <div class="flex items-center m-auto text-white text-3xl h-16  md:h-32 font-extrabold px-10 py-1">
@@ -33,27 +34,27 @@
         </div>
     </header>
     <main>
-        <nav class="w-4/6 m-auto my-12">
-            <h3 class="mt-8 font-bold text-3xl">Filtros</h3>
+        <nav class="p-4 lg:w-4/6 m-auto my-12">
+            <h3 class=" md:mt-8 font-bold text-3xl">Filtros</h3>
             <form action="">
-                <div class="flex">
-                     <input id="input-search" class="p-2 w-full my-4 border-b-2 border-green-300 pb-2  mb-8" type="text" placeholder="Ingresa tu búsqueda" name="search">
+                <div class="flex">  
+                     <input id="input-search" class="md:p-2 w-auto lg:my-4 border-b-2 border-green-300 lg:pb-2  lg:mb-8 lg:w-full" type="text" placeholder="Ingresa tu búsqueda" name="search">
                      <!-- falta simbolo de buscar en input -->
-                     <button id="button-search" class="mx-4 flex justify-center items-center bg-black text-white w-24 h-10 hover:bg-green-400 focus:outline-none transition-colors duration-200" type="submit">Buscar</button>
+                     <button id="button-search" class="lg:mx-4 lg:mt-4 flex justify-center items-center bg-black text-white w-24 md:h-10 hover:bg-purple-500 focus:outline-none transition-colors duration-200" type="submit">Buscar</button>
                 </div>
             
                 <div class="flex ">
                     <div class="flex flex-col">
-                        <label class="mr-6  md:text-2xl text-gray-500 font-semibold md:my-4" for="tipo">Tipo</label>
+                        <label class="mr-6  md:text-2xl text-black font-semibold md:my-4" for="tipo">Tipo</label>
                         <select id="filtro-categoria" class="mr-6  md:text-xl bg-gray-200 font-bold w-30"  id="tipo" name="tipo">
                             <option value="nombre">Personaje</option>
                             <option  value="capitulo">Capitulo</option>
                         </select>
                     </div>
                     
-                    <div id="opcionesPersonajes" class="flex flex-wrap justify-between">
+                    <div id="opcionesPersonajes" class="hidden flex flex-wrap justify-between">
                         <div class="flex flex-col mx-4">
-                            <label class="mr-6  md:text-2xl text-gray-500 font-semibold md:my-4" for="orden">Por genero</label>
+                            <label class="mr-6  md:text-2xl text-black font-semibold md:my-4" for="orden">Por genero</label>
                             <select class="mr-6  md:text-xl bg-gray-200 font-bold w-30"   id="gender-filter" name="orden">
                                 <option value="todos">Todos</option>
                                 <option value="male">Hombre</option>
@@ -63,7 +64,7 @@
                             </select>
                         </div>
                         <div class="flex flex-col mx-4">
-                            <label class="mr-6  md:text-2xl text-gray-500 font-semibold md:my-4" >Por estado</label>
+                            <label class="mr-6  md:text-2xl text-black font-semibold md:my-4" >Por estado</label>
                             <select class="mr-6  md:text-xl bg-gray-200 font-bold w-30"  id="status-filter" name="orden">
                                 <option value="todos">Todos</option>
                                 <option value="alive">Vivo</option>
@@ -75,16 +76,18 @@
                 </div>
             </form>
         </nav>
-        <section class="w-4/6 m-auto py-12 h-102 bg-purple-400" >
+        <section class="w-full lg:w-4/6 m-auto py-12 h-102 bg-purple-400" >
+            <div id="loader" class="loader m-auto"></div>
 
             <div class=" h-auto flex flex-wrap w-full justify-center m-auto" id="container-images">
+                
                 <div class="flex justify-center" id="characters">
 
                 </div>
 
             </div>
             <div id="container-detail"></div>
-            <h4 id="page"></h4>
+            <h4 id="page" class="text-xl m-auto flex flex-col justify-center items-center ">2</h4>
             <div id="container-buttons" class="flex justify-center">
                 <button  id="button-prev-prev" class="border-4 bg-gray-400 p-1 m-4"><i class="fa-solid fa-angles-left"></i> </button>
                 <button  id="button-prev" class="border-4 bg-gray-400 p-1 m-4"><i class="fa-solid fa-arrow-left"></i></button>
