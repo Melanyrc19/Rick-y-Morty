@@ -21,20 +21,20 @@
 
     </style>
 </head> 
-<body class="bg-green-600 absolute">
+<body class="bg-green-600">
     <header class="flex flex-col">
         <div class="flex justify-center items-center bg-black h-21">
             <div class="flex items-center m-auto text-white text-3xl h-16  md:h-32 font-extrabold px-10 py-1">
                  <p class="text-4xl ">Buscador de Rick y Morty</p>
             </div>
         </div>
-        <div class="home relative">
+        <div class="relative">
             <div class="absolute inset-0 bg-gradient-to-b from-black to-transparent opacity-60 z-10"></div>
             <img src="https://images.fastcompany.com/image/upload/f_auto,q_auto,c_fit/wp-cms/uploads/2019/11/p-1-it-is-time-to-forgive-and8216rick-and-mortyand8217-for-its-toxic-fandom.jpg" class="w-full h-72 object-cover" alt="">
         </div>
     </header>
     <main>
-        <nav class="p-4 lg:w-4/6 m-auto my-12">
+        <nav id="nav" class="p-4 lg:w-4/6 m-auto my-12">
             <h3 class=" md:mt-8 font-bold text-3xl">Filtros</h3>
             <form action="">
                 <div class="flex">  
@@ -52,7 +52,7 @@
                         </select>
                     </div>
                     
-                    <div id="opcionesPersonajes" class="hidden flex flex-wrap justify-between">
+                    <div id="opcionesPersonajes" class=" flex flex-wrap justify-between">
                         <div class="flex flex-col mx-4">
                             <label class="mr-6  md:text-2xl text-black font-semibold md:my-4" for="orden">Por genero</label>
                             <select class="mr-6  md:text-xl bg-gray-200 font-bold w-30"   id="gender-filter" name="orden">
@@ -76,7 +76,7 @@
                 </div>
             </form>
         </nav>
-        <section class="w-full lg:w-4/6 m-auto py-12 h-102 bg-purple-400" >
+        <section class="w-full lg:w-4/6 my-12 mx-auto py-12 h-102 bg-purple-400 " >
             <div id="loader" class="loader m-auto"></div>
 
             <div class=" h-auto flex flex-wrap w-full justify-center m-auto" id="container-images">
@@ -86,8 +86,8 @@
                 </div>
 
             </div>
-            <div id="container-detail" class="hidden w-full h-full bg-black text-white">casa</div>
-            <h4 id="page" class="text-xl m-auto flex flex-col justify-center items-center ">2</h4>
+            <div id="container-detail" class="hidden w-full h-full bg-black text-white"></div>
+            <h4 id="page" class="text-xl m-auto flex flex-col justify-center items-center"></h4>
             <div id="container-buttons" class="flex justify-center">
                 <button  id="button-prev-prev" class="border-4 bg-gray-400 p-1 m-4"><i class="fa-solid fa-angles-left"></i> </button>
                 <button  id="button-prev" class="border-4 bg-gray-400 p-1 m-4"><i class="fa-solid fa-arrow-left"></i></button>

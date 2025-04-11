@@ -11,6 +11,7 @@ const $textSearch = $("#input-search");
 const $containerImages = $("#container-images");
 const $containerDetail = $("#container-detail");
 const $containerButtons = $("#container-buttons");
+const $nav = $("#nav")
 
 const $page = $("#page");
 
@@ -114,10 +115,15 @@ function pintarCapitulos(arrayCapitulos) {
         <p>Genero: ${capitulo.gender}</p>
         <p>Estado: ${capitulo.status}</p>`;
     }}
+
 }
 
 
-function mostrarDetallePersonaje(personaje) {
+async function mostrarDetallePersonaje(personaje) {
+    const capitulo = await Promise.all(
+        personaje.episode.map(url => fetch(url).then(res => res.json()))
+    );
+  
     $containerDetail.innerHTML = `
         <div class="p-4 rounded shadow-lg">
             <h2 class="text-2xl font-bold text-white">${personaje.name}</h2>
@@ -126,6 +132,13 @@ function mostrarDetallePersonaje(personaje) {
             <p class="text-white"><strong>Estado:</strong> ${personaje.status}</p>
             <p class="text-white"><strong>Especie:</strong> ${personaje.species}</p>
             <p class="text-white"><strong>Origen:</strong> ${personaje.origin.name}</p>
+             <div class="flex flex-wrap gap-4">
+                ${capitulo.map(c => `
+                    <div class=" bg-gradient-to-br from-green-400 to-blue-500 shadow-lg  p-2 rounded shadow w-40 text-center">
+                        <p class="font-bold">${c.name}</p>
+                    </div>
+                `).join("")}
+            </div>
             <button class="mt-6 bg-red-500 px-4 py-2 rounded hover:bg-red-600" onclick="cerrarDetalle()">Cerrar</button>
         </div>
     `;
@@ -137,14 +150,14 @@ async function mostrarDetalleCapitulo(capitulo) {
     );
 
     $containerDetail.innerHTML = `
-        <div class="bg-blue-800 p-6 rounded-lg text-white shadow-lg mt-6">
+        <div class="bg-black p-6 rounded-lg text-white shadow-lg mt-6">
             <h2 class="text-2xl font-bold mb-4">${capitulo.name}</h2>
             <p><strong>Episodio:</strong> ${capitulo.episode}</p>
             <p><strong>Fecha de emisión:</strong> ${capitulo.air_date}</p>
             <h3 class="text-xl mt-4 mb-2 font-bold">Personajes:</h3>
             <div class="flex flex-wrap gap-4">
                 ${personajes.map(p => `
-                    <div class="bg-green-600 p-2 rounded shadow w-40 text-center">
+                    <div class=" bg-gradient-to-br from-green-400 to-blue-500 shadow-lg  p-2 rounded shadow w-40 text-center">
                         <img src="${p.image}" class="rounded w-full h-28 object-cover" />
                         <p class="font-bold">${p.name}</p>
                     </div>
@@ -158,6 +171,9 @@ async function mostrarDetalleCapitulo(capitulo) {
 function cerrarDetalle() {
     $containerDetail.classList.add("hidden");
     $containerImages.classList.remove("hidden"); 
+    $containerButtons.classList.remove("hidden");
+    $page.classList.remove("hidden");
+    $nav.classList.remove("hidden");
 }
 
 function mostrarLoader() {
@@ -196,11 +212,11 @@ $buttonPrevPrev.addEventListener('click', () =>{
 })
 $buttonNextNext.addEventListener('click', () =>{
     if (esLaVistaDePersonajes){
-        currentPage = 42
+        currentPage = pageMax
         dibujarPantalla(currentPage)
     }
     if (!esLaVistaDePersonajes){
-        currentPage = 3
+        currentPage = pageMax
         dibujarPantalla(currentPage)
     }
    
@@ -212,13 +228,17 @@ $buttonNextNext.addEventListener('click', () =>{
 $opcionesPersonajes = $("#opcionesPersonajes")
 
 $filtroCategoria.addEventListener("click", (e) => {
+    currentPage = 1
     esLaVistaDePersonajes = e.target.value === "nombre";
     dibujarPantalla();
     if ($filtroCategoria.value === "nombre") {
         $opcionesPersonajes.classList.remove("hidden");
+        
     } else {
         $opcionesPersonajes.classList.add("hidden");
+
     }  
+
 });
 
 // Filtros
@@ -248,14 +268,21 @@ $containerImages.addEventListener("click", async (e) => {
             const data = await fetch(`https://rickandmortyapi.com/api/character/${id}`);
             const personaje = await data.json();
             mostrarDetallePersonaje(personaje);
+            
          
         } else {
             const data = await fetch(`https://rickandmortyapi.com/api/episode/${id}`);
             const capitulo = await data.json();
             await mostrarDetalleCapitulo(capitulo);
+            
         }
 
         $containerDetail.classList.remove("hidden");
         $containerImages.classList.add("hidden");
+        $containerButtons.classList.add("hidden");
+        $page.classList.add("hidden");
+        $nav.classList.add("hidden");
+      
+        
     }
 });
