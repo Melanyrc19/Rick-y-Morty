@@ -22,8 +22,11 @@ const $buttonPrev = $("#button-prev");
 const $buttonNext = $("#button-next");
 const $buttonPrevPrev = $("#button-prev-prev");
 const $buttonNextNext = $("#button-next-next");
-let personajeSeleccionado = null;
 
+const $butonDetalleCapitulo = $("#button-detalle-capitulo")
+const $butonDetallePersonaje= $("#button-detalle-personaje")
+ 
+// filtros
 
 const $statusFilter = $("#status-filter");
 const $filtroCategoria = $("#filtro-categoria");
@@ -63,11 +66,9 @@ function pintarDatos(array) {
         <h2 class="md:text-2xl font-bold text-white mb-2 font-[Comic Sans MS], sans-serif">${personaje.name}</h2>
         <p class="text-white mb-1"><strong>Género:</strong> ${personaje.gender}</p>
         <p class="text-white mb-4"><strong>Estado:</strong> ${personaje.status}</p>
-       <button class="ver-mas bg-yellow-400 text-black py-2 px-6 rounded-full shadow-lg transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 focus:outline-none"
-    data-id="${personaje.id}"
-    onclick="verDetallePersonaje(${personaje.id})">
-    Ver Más
-</button>
+        <button data-id="${personaje.id}"  class="bg-yellow-400 text-black py-2 px-6 rounded-full shadow-lg transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 focus:outline-none">
+            Ver Más
+        </button>
     </div>
     `;
     }}
@@ -77,30 +78,16 @@ function pintarDatos(array) {
          <div class="sm:w-4/6 sm:w-60 p-6 flex flex-col justify-start items-center m-6 my-12 rounded-lg shadow-2xl bg-gradient-to-br from-green-500 to-blue-600 h-60 md:transform md:transition duration-300 md:ease-in-out md:hover:scale-110 md:hover:rotate-3">
             <h2 class="md:text-2xl font-extrabold text-white mb-3 text-center font-[Comic Sans MS], sans-serif">${capitulo.name}</h2>
             <p class="text-lg text-white mb-3 text-center">Episodio: ${capitulo.episode}</p>
-            <button class="ver-mas  bg-yellow-400 text-black py-2 px-6 rounded-full shadow-lg transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 focus:outline-none" data-id="${capitulo.id}" onclick="verDetalleCapitulo(${capitulo.id})">
-   Ver Más
-</button>
-
+            <button data-id="${capitulo.id}"  class="bg-yellow-400 text-black py-2 px-6 rounded-full shadow-lg transform transition duration-300 ease-in-out hover:scale-110 hover:bg-yellow-500 focus:outline-none">
+                Ver Más
+            </button>
         </div>
         `;
     }
+
+    
 }}
 
-
-function mostrarDetallePersonaje(personaje) {
-    $containerDetail.innerHTML = `
-        <div class="bg-white p-4 rounded shadow-lg">
-            <h2 class="text-2xl font-bold">${personaje.name}</h2>
-            <img src="${personaje.image}" class="w-40 rounded my-4" />
-            <p><strong>Género:</strong> ${personaje.gender}</p>
-            <p><strong>Estado:</strong> ${personaje.status}</p>
-            <p><strong>Especie:</strong> ${personaje.species}</p>
-            <p><strong>Origen:</strong> ${personaje.origin.name}</p>
-            <p><strong>Ubicación:</strong> ${personaje.location.name}</p>
-        </div>
-    `;
-    
-}
 
 
 
@@ -130,47 +117,48 @@ function pintarCapitulos(arrayCapitulos) {
 }
 
 
-
-
 function mostrarDetallePersonaje(personaje) {
     $containerDetail.innerHTML = `
-        <div class="bg-white p-4 rounded shadow-lg">
-            <h2 class="text-2xl font-bold">${personaje.name}</h2>
+        <div class="p-4 rounded shadow-lg">
+            <h2 class="text-2xl font-bold text-white">${personaje.name}</h2>
             <img src="${personaje.image}" class="w-40 rounded my-4" />
-            <p><strong>Género:</strong> ${personaje.gender}</p>
-            <p><strong>Estado:</strong> ${personaje.status}</p>
-            <p><strong>Especie:</strong> ${personaje.species}</p>
-            <p><strong>Origen:</strong> ${personaje.origin.name}</p>
+            <p class="text-white"><strong>Género:</strong> ${personaje.gender}</p>
+            <p class="text-white"><strong>Estado:</strong> ${personaje.status}</p>
+            <p class="text-white"><strong>Especie:</strong> ${personaje.species}</p>
+            <p class="text-white"><strong>Origen:</strong> ${personaje.origin.name}</p>
+            <button class="mt-6 bg-red-500 px-4 py-2 rounded hover:bg-red-600" onclick="cerrarDetalle()">Cerrar</button>
         </div>
     `;
     $containerDetail.classList.remove("hidden");
 }
-function mostrarDetalleCapitulo(capitulo) {
+async function mostrarDetalleCapitulo(capitulo) {
+    const personajes = await Promise.all(
+        capitulo.characters.map(url => fetch(url).then(res => res.json()))
+    );
+
     $containerDetail.innerHTML = `
-        <div class="bg-white p-4 rounded shadow-lg">
-            <h2 class="text-2xl font-bold mb-2">${capitulo.name}</h2>
+        <div class="bg-blue-800 p-6 rounded-lg text-white shadow-lg mt-6">
+            <h2 class="text-2xl font-bold mb-4">${capitulo.name}</h2>
             <p><strong>Episodio:</strong> ${capitulo.episode}</p>
             <p><strong>Fecha de emisión:</strong> ${capitulo.air_date}</p>
+            <h3 class="text-xl mt-4 mb-2 font-bold">Personajes:</h3>
+            <div class="flex flex-wrap gap-4">
+                ${personajes.map(p => `
+                    <div class="bg-green-600 p-2 rounded shadow w-40 text-center">
+                        <img src="${p.image}" class="rounded w-full h-28 object-cover" />
+                        <p class="font-bold">${p.name}</p>
+                    </div>
+                `).join("")}
+            </div>
+            <button class="mt-6 bg-red-500 px-4 py-2 rounded hover:bg-red-600" onclick="cerrarDetalle()">Cerrar</button>
         </div>
     `;
-    $containerDetail.classList.remove("hidden");
 }
 
-
-async function verDetallePersonaje(id) {
-    const res = await fetch(`https://rickandmortyapi.com/api/character/${id}`);
-    const personaje = await res.json();
-    mostrarDetallePersonaje(personaje);
+function cerrarDetalle() {
+    $containerDetail.classList.add("hidden");
+    $containerImages.classList.remove("hidden"); 
 }
-
-async function verDetalleCapitulo(id) {
-    const res = await fetch(`https://rickandmortyapi.com/api/episode/${id}`);
-    const capitulo = await res.json();
-    mostrarDetalleCapitulo(capitulo);
-}
-
-
-
 
 function mostrarLoader() {
     $loader.classList.remove("hidden");
@@ -180,6 +168,10 @@ function ocultarLoader() {
     $loader.classList.add("hidden");
 }
 
+
+
+// eventos:
+
 $buttonNext.addEventListener('click', () =>{
     if (currentPage < pageMax) {
         currentPage += 1;
@@ -187,13 +179,12 @@ $buttonNext.addEventListener('click', () =>{
        
     }
 
-
 })
 $buttonPrev.addEventListener('click', () =>{
     if (currentPage>1){
         currentPage -= 1
         dibujarPantalla(currentPage)
-         //
+         
     }
   
 
@@ -204,8 +195,14 @@ $buttonPrevPrev.addEventListener('click', () =>{
 
 })
 $buttonNextNext.addEventListener('click', () =>{
-    currentPage = pageMax;
-    dibujarPantalla();
+    if (esLaVistaDePersonajes){
+        currentPage = 42
+        dibujarPantalla(currentPage)
+    }
+    if (!esLaVistaDePersonajes){
+        currentPage = 3
+        dibujarPantalla(currentPage)
+    }
    
 
 })
@@ -213,7 +210,7 @@ $buttonNextNext.addEventListener('click', () =>{
 
 
 $opcionesPersonajes = $("#opcionesPersonajes")
-// Cambiar entre personajes y capitulos
+
 $filtroCategoria.addEventListener("click", (e) => {
     esLaVistaDePersonajes = e.target.value === "nombre";
     dibujarPantalla();
@@ -238,13 +235,27 @@ $statusFilter.addEventListener("change", (e) => {
 });
 
 
-
  
 window.onload = () => { 
     dibujarPantalla();
+    
 };
+$containerImages.addEventListener("click", async (e) => {
+    if (e.target.tagName === "BUTTON") {
+        const id = e.target.getAttribute("data-id");
 
+        if (esLaVistaDePersonajes) {
+            const data = await fetch(`https://rickandmortyapi.com/api/character/${id}`);
+            const personaje = await data.json();
+            mostrarDetallePersonaje(personaje);
+         
+        } else {
+            const data = await fetch(`https://rickandmortyapi.com/api/episode/${id}`);
+            const capitulo = await data.json();
+            await mostrarDetalleCapitulo(capitulo);
+        }
 
-
-// me falta arreglar botones,V loaadingV, detalle. coomo hago para saber cuantas paginas poner.V 
-
+        $containerDetail.classList.remove("hidden");
+        $containerImages.classList.add("hidden");
+    }
+});
